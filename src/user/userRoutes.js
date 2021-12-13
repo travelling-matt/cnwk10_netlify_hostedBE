@@ -7,7 +7,7 @@ const { addUser } = require("./userController");
 //save Router (from above) as userRouter
 const userRouter = Router();
 
-//to add data = .post("<endpoint>")
+//path to add data = .post("<endpoint>", <function>)
 userRouter.post("/user", addUser);
 
 //export the route
