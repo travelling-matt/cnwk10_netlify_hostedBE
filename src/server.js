@@ -1,14 +1,28 @@
+//set db connection
+require("./db/connection");
+
+//require and install express
+//npm i express
 const express = require("express");
 
+//require and install express (Cross Origin Resource Sharing)
+//npm i cors 
+const cors = require("cors");
+
+const userRouter = require("./user/userRoutes");
+
+//create express app
 const app = express();
 
+//set port number
 const port = 5000;
 
-// the app.use() funtion is used to mount the specified middleware function(s) at the path specified
-app.use("/", express.static("public"));
-app.use("/aboutus", express.static("public/aboutus.html"));
-app.use("/contact", express.static("public/contact.html"));
-app.use("/giftstore", express.static("public/giftstore.html"));
+//build in method allowing use of JSON
+app.use(express.json());
+app.use(cors());
+
+//instead of static url-> file path
+app.use(userRouter);
 
 // the app.listen() function is used to bind and listen to the connection on the specified host and port
 app.listen(port, () => {
