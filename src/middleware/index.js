@@ -19,20 +19,22 @@ exports.hashPassword = async (req, res, next) => {
     }
 };
 
-exports.checkPassword = async (req, res) => {
+exports.checkPassword = async (req, res, next) => {
     try {
-        const loginUser = await User.findOne(req.body.username);
+        const loginUser = await User.findOne({ username: req.body.username });
         if (loginUser) {
-            const match = await bcrypt.compare(req.body.password, loginUser.hash);
+            const match = await bcrypt.compare(req.body.password, loginUser.password);
             if (match) {
                 res.status(200).send({
                     message: "login successful"
                 });
+                next();
             } else {
                 res.status(500).send({
                     message: "password incorrect"
                 });
-            }
+                console.log(`${req.body.username} has attempted to log in with the wrong password`);
+            };
         } else {
             res.status(500).send({
                 message: "username incorrect"
@@ -45,13 +47,3 @@ exports.checkPassword = async (req, res) => {
         });
     }
 };
-
-// exports.decryptPassword = async (req, res, next) => {
-//     try {
-//         req.body.password = await bcrypt.compare(req.body.password, hash)
-//         next(); //will run the next function from the arguement above (hashPasswords arguments)
-//     } catch(error) {
-//         console.log(error);
-//         res.status(500).send({message: "Unsuccessfull, please try again"}); // if res(ponce) is status 500 send message
-//     }
-// };

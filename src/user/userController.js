@@ -10,6 +10,7 @@ exports.addUser = async (req, res) => {
             message: "Successfully added user",
             newUser
         });
+        console.log(`new user created: ${newUser}`);
     } catch (error) {
         console.log(error);
         res.status(500).send({
@@ -37,6 +38,7 @@ exports.updateUser = async (req, res) => {
             message: "user updated",
             updatedUser
         });
+        console.log(`${updatedUser} updated`)
     } catch (error) {
         console.log(error);
     }
@@ -50,56 +52,17 @@ exports.deleteUser = async (req, res) => {
             message: "user deleted",
             delUser
         });
+        console.log(`${delUser.username} deleted`)
     } catch (error) {
         console.log(error);
     }
 };
 
-// exports.loginUser = async (req, res) => {
-//     try {
-//         const loginUser = await User.findOne(req.body.username);
-//         const match = await bcrypt.compare(req.body.password, User.hash);
-//         if (match) {
-//             res.status(200).send({
-//                 message: "login successful"
-//             });
-//         } else {
-//             res.status(500).send({
-//                 message: "password incorrect"
-//             });
-
-//         }
-//     } catch (error) {
-//         console.log(error);
-//         res.status(500).send({
-//             message: "Unsuccessful, please check again"
-//         });
-//     }
-// };
-
-// exports.loginUser = async (req, res) => {
-//     try {
-//         const loginUser = await User.findOne(req.body.username);
-//         if (loginUser) {
-//             await comparePasswords({plainText: req.body.password, user: loginUser}, res);
-//             console.log("login successful");
-//         } else {
-//             res.status(500).send({message: `User ${req.body.username} not found please try again`});
-//         }
-//     } catch(error) {
-//         console.log(error);
-//         res.status(500).send({ message: "Unsuccessful, please check again"});
-//     }
-// };
-
-// async function checkUser(username, password) {
-//     //... fetch user from a db etc.
-
-//     const match = await bcrypt.compare(password, user.passwordHash);
-
-//     if(match) {
-//         //login
-//     }
-
-//     //...
-// }
+//message in console after user successfully logs in (proof of <next()> working)
+exports.welcomeMessage = async (req) => {
+    try {
+        console.log(`${req.body.username} logged in`);
+    } catch (error) {
+        console.log(error);
+    }
+};
