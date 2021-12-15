@@ -22,8 +22,13 @@ exports.hashPassword = async (req, res, next) => {
 exports.checkPassword = async (req, res, next) => {
     try {
         const loginUser = await User.findOne({ username: req.body.username });
+        //User = object. findOne = method. Find the info and match to the User model as defined in userModel.js
+        //console.log(loginUser);
+        //findOne returns as truthy or falsy
         if (loginUser) {
             const match = await bcrypt.compare(req.body.password, loginUser.password);
+            //console.log(match)
+            //compare returns a boolean
             if (match) {
                 res.status(200).send({
                     message: "login successful"

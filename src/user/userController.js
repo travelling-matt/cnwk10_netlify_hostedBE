@@ -19,6 +19,24 @@ exports.addUser = async (req, res) => {
     }
 };
 
+// exports.addUser = async (req, res) => {
+//     try {
+//         const newUser = new User(req.body);
+                //add email validation here. if true -> await newUser else if false message "invalid email address"
+//         await newUser.save();
+//         res.status(200).send({
+//             message: "Successfully added user",
+//             newUser
+//         });
+//         console.log(`new user created: ${newUser}`);
+//     } catch (error) {
+//         console.log(error);
+//         res.status(500).send({
+//             message: "Unsuccessful, please check again"
+//         });
+//     }
+// };
+
 exports.listUser = async (req, res) => {
     try {
         const users = await User.find();
@@ -58,7 +76,7 @@ exports.deleteUser = async (req, res) => {
     }
 };
 
-//message in console after user successfully logs in (proof of <next()> working)
+//message in console after user successfully logs in (proof of next() working)
 exports.welcomeMessage = async (req) => {
     try {
         console.log(`${req.body.username} logged in`);
