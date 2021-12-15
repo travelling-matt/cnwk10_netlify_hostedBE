@@ -1,28 +1,14 @@
 //pull in model
 const User = require("./userModel");
 
-//requests and response come through here
-exports.addUser = async (req, res) => {
-    try {
-        const newUser = new User(req.body);
-        await newUser.save();
-        res.status(200).send({
-            message: "Successfully added user",
-            newUser
-        });
-        console.log(`new user created: ${newUser}`);
-    } catch (error) {
-        console.log(error);
-        res.status(500).send({
-            message: "Unsuccessful, please check again"
-        });
-    }
-};
+//install and require email-validator
+//npm i email-validator
+const emailValidator = require('email-validator');
 
+//requests and response come through here
 // exports.addUser = async (req, res) => {
 //     try {
 //         const newUser = new User(req.body);
-                //add email validation here. if true -> await newUser else if false message "invalid email address"
 //         await newUser.save();
 //         res.status(200).send({
 //             message: "Successfully added user",
@@ -36,6 +22,33 @@ exports.addUser = async (req, res) => {
 //         });
 //     }
 // };
+
+exports.addUser = async (req, res) => {
+    try {
+        const newUser = new User(req.body);
+                //add email validation here. if true -> await newUser else if false message "invalid email address". try as one line.
+                //email validator checks for special characters before and after '@' and after '.' . Also has length checks.
+                //var tester = /^[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
+            if (emailValidator.validate(req.body.email)) {
+                    await newUser.save();
+                    res.status(200).send({
+                        message: "Successfully added user",
+                        newUser
+                    });
+                    console.log(`new user created: ${newUser}`);
+                } else {
+                    console.log("invalid email address");
+                    res.status(500).send({
+                        message: "Invalid email address, please check again"
+                    });
+                };
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            message: "Unsuccessful, please check again"
+        });
+    }
+};
 
 exports.listUser = async (req, res) => {
     try {
