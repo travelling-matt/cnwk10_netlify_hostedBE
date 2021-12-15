@@ -12,7 +12,8 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true,
         match: /.+\@.+\..+/, //check for <someone>@<somewhere>.<extension>
-        //match regexp (regular expressions) so no characters break the app
+        //match regexp (regular expressions) so no characters break the app.
+        //further email validation added in userControl.js/addUser fn.
     },
     password:{
         type: String,
