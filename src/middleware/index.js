@@ -9,8 +9,8 @@ const User = require("../user/userModel");
 //hash password with bcrypt
 exports.hashPassword = async (req, res, next) => {
     try {
-        req.body.password = await bcrypt.hash(req.body.password, 8); //take password from body of req(uest) and hash it. max length 8 characters
-        next(); //will run the next function from the arguement above (hashPasswords arguments) - check this
+        req.body.password = await bcrypt.hash(req.body.password, 8); //take password from body of req(uest) and hash it. password will be hashed 8 times.
+        next(); //will run the next function from the arguement from the route (hashPasswords arguments)
     } catch (error) {
         console.log(error);
         res.status(500).send({
@@ -31,7 +31,7 @@ exports.checkPassword = async (req, res, next) => {
             //compare returns a boolean
             if (match) {
                 res.status(200).send({
-                    message: "login successful"
+                    message: `Hi ${loginUser.username} login successful`, username: loginUser.username
                 });
                 next();
             } else {

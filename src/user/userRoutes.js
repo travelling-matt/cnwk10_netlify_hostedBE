@@ -21,10 +21,11 @@ userRouter.get("/list", listUser);
 userRouter.put("/update", updateUser);
 
 //Delete
-userRouter.delete("/delete", deleteUser);
+userRouter.delete("/delete", deleteUser, listUser);
 
 //Login
-userRouter.get("/login", checkPassword, welcomeMessage);
+//userRouter.get("/login", checkPassword, welcomeMessage);
+userRouter.post("/login", checkPassword, welcomeMessage);
 
 //decryptPassword,
 

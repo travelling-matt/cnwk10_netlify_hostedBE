@@ -6,6 +6,8 @@ const User = require("./userModel");
 const emailValidator = require('email-validator');
 
 //requests and response come through here
+
+// addUser without extra email validation.
 // exports.addUser = async (req, res) => {
 //     try {
 //         const newUser = new User(req.body);
@@ -83,7 +85,8 @@ exports.deleteUser = async (req, res) => {
             message: "user deleted",
             delUser
         });
-        console.log(`${delUser.username} deleted`)
+        console.log(`${delUser.username} deleted`);
+        next();
     } catch (error) {
         console.log(error);
     }
