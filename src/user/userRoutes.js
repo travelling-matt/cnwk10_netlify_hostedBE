@@ -5,7 +5,7 @@ const { Router } = require("express");
 const { addUser, listUser, deleteUser, updateUser, welcomeMessage } = require("./userController");
 
 //enable hashPassword from middleware folder(in index.js, index is default so no file name needed here)
-const { hashPassword, checkPassword } = require("../middleware");
+const { hashPassword, checkPassword, tokenDecoding } = require("../middleware");
 
 //save Router (from above) as userRouter
 const userRouter = Router();
@@ -26,6 +26,8 @@ userRouter.delete("/delete", deleteUser, listUser);
 //Login
 //userRouter.get("/login", checkPassword, welcomeMessage);
 userRouter.post("/login", checkPassword, welcomeMessage);
+
+userRouter.get("/user", tokenDecoding, welcomeMessage);
 
 //decryptPassword,
 

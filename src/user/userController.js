@@ -5,6 +5,10 @@ const User = require("./userModel");
 //npm i email-validator
 const emailValidator = require('email-validator');
 
+const jwt = require("jsonwebtoken");
+
+const userRouter = require("./userRoutes");
+
 //requests and response come through here
 
 // addUser without extra email validation.
@@ -33,6 +37,7 @@ exports.addUser = async (req, res) => {
                 //var tester = /^[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
             if (emailValidator.validate(req.body.email)) {
                     await newUser.save();
+                    const token = jwt.sign({ _id: userRouter._id }, process.env.SECRET);
                     res.status(200).send({
                         message: "Successfully added user",
                         newUser
@@ -94,7 +99,8 @@ exports.deleteUser = async (req, res) => {
 
 //message in console after user successfully logs in (proof of next() working)
 exports.welcomeMessage = async (req) => {
-    try {
+    try {        
+        const token = jwt.sign({ _id: userRouter._id }, process.env.SECRET);
         console.log(`${req.body.username} logged in`);
     } catch (error) {
         console.log(error);

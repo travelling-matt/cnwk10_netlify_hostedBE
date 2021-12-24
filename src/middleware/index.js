@@ -6,6 +6,24 @@ const bcrypt = require("bcrypt");
 //also need to require User data
 const User = require("../user/userModel");
 
+//JSONWebToken
+const jwt = require("jsonwebtoken");
+
+exports.tokenDecoding = async (req, res, next) => {
+    try{
+        const token = req.header("Authorization".replace("Bearer ", "")); //strips everything except token from header.
+        const decodedToken = await jwt.verify(token, process.env.SECRET);
+        req.user = await User.findById(decodedToken._id);
+        if (req.user) {
+            next();
+        } else {
+            throw new Error();
+        }
+    } catch(error) {
+        console.log(error);
+    }
+};
+
 //hash password with bcrypt
 exports.hashPassword = async (req, res, next) => {
     try {
