@@ -15,7 +15,7 @@ const userRouter = require("./user/userRoutes");
 const app = express();
 
 //set port number
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 //build in method allowing use of JSON
 app.use(express.json());
