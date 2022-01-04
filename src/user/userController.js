@@ -69,21 +69,20 @@ exports.listUser = async (req, res) => {
     }
 };
 
-exports.updateUser = async (req, res,) => {
+exports.updateUser = async (req, res) => {
     try {
         const updatedUser = await User.findOneAndUpdate(req.body.filter, req.body.newData);
         res.status(200).send({
             message: "user updated",
             updatedUser
         });
-        console.log(`${updatedUser} updated`)
-        next();
+        console.log(`${updatedUser} updated`);
     } catch (error) {
         console.log(error);
     }
 };
 
-exports.deleteUser = async (req, res,) => {
+exports.deleteUser = async (req, res) => {
     try {
         const delUser = req.body;
         await User.deleteOne(delUser);
