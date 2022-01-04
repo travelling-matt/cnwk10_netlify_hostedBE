@@ -69,7 +69,7 @@ exports.listUser = async (req, res) => {
     }
 };
 
-exports.updateUser = async (req, res) => {
+exports.updateUser = async (req, res,) => {
     try {
         const updatedUser = await User.findOneAndUpdate(req.body.filter, req.body.newData);
         res.status(200).send({
@@ -77,12 +77,13 @@ exports.updateUser = async (req, res) => {
             updatedUser
         });
         console.log(`${updatedUser} updated`)
+        next();
     } catch (error) {
         console.log(error);
     }
 };
 
-exports.deleteUser = async (req, res) => {
+exports.deleteUser = async (req, res,) => {
     try {
         const delUser = req.body;
         await User.deleteOne(delUser);

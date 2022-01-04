@@ -18,7 +18,7 @@ userRouter.post("/user", hashPassword, addUser);
 userRouter.get("/list", listUser);
 
 //Update
-userRouter.put("/update", updateUser);
+userRouter.put("/update", updateUser, listUser);
 
 //Delete
 userRouter.delete("/delete", deleteUser, listUser);
